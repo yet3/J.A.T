@@ -27,35 +27,33 @@ const StepView = ({ index, step }: Props) => {
   };
 
   return (
-    <>
-      <article
-        ref={setNodeRef}
-        style={style}
-        className={clsx(
-          'touch-none',
-          'grid gap-1 w-full max-w-sm sm:w-96 min-h-32 border my-2 content-start items-start grid-rows-[auto,auto,1fr] p-1'
-        )}
-      >
-        <StepHeader
-          t={t}
-          deleteStep={deleteStep}
-          stepIndex={index}
-          amtOfSteps={amtOfSteps}
-          attributes={attributes}
-          listeners={listeners}
-          isDragging={isDragging}
-        />
+    <li
+      ref={setNodeRef}
+      style={style}
+      className={clsx(
+        'touch-none',
+        'grid gap-1 w-full max-w-sm sm:w-96 min-h-32 border my-2 content-start items-start grid-rows-[auto,auto,1fr] p-1'
+      )}
+    >
+      <StepHeader
+        t={t}
+        deleteStep={deleteStep}
+        stepIndex={index}
+        amtOfSteps={amtOfSteps}
+        attributes={attributes}
+        listeners={listeners}
+        isDragging={isDragging}
+      />
 
-        <TimeEditor setTime={setTime} time={step.time} grayed={isDragging} />
-        <input
-          value={step.title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="bg-transparent outline-none border-none resize-none text-lg font-medium px-1"
-          placeholder={t('title_placeholder')}
-        />
-        <AutoTextArea t={t} step={step} setDescription={setDescription} />
-      </article>
-    </>
+      <TimeEditor stepId={step.id} setTime={setTime} time={step.time} grayed={isDragging} />
+      <input
+        value={step.title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="bg-transparent outline-none border-none resize-none text-lg font-medium px-1"
+        placeholder={t('title_placeholder')}
+      />
+      <AutoTextArea t={t} step={step} setDescription={setDescription} />
+    </li>
   );
 };
 
