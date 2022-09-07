@@ -1,0 +1,5 @@
+@layer components {
+  .main-layout-main {
+    @apply flex flex-col items-center;
+  }
+}

@@ -1,0 +1,12 @@
+@layer components {
+  .button {
+    @apply border border-primary disabled:border-disabled text-primary disabled:text-disabled cursor-pointer;
+  }
+
+  .button-size-base {
+    @apply py-2 px-4;
+  }
+  .button-size-sm {
+    @apply py-1 px-2;
+  }
+}

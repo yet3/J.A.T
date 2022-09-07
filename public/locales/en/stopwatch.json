@@ -1,0 +1,9 @@
+{
+  "actions": {
+    "start": "Start",
+    "pause": "Puase",
+    "reset": "Reset",
+    "lap": "Lap"
+  },
+  "laps": "Laps"
+}

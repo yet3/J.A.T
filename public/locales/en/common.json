@@ -1,0 +1,19 @@
+{
+  "pages": {
+    "timer": "Timer",
+    "timerEditor": "Timer Editor",
+    "stopwatch": "Stopwatch"
+  },
+  "confirmationModal": {
+    "title": "Confirmation",
+    "defaultContent": "Are you sure?",
+    "confirmButton": "Yes",
+    "rejectButton": "No"
+  },
+  "time": {
+    "hours": "HOURS",
+    "minutes": "MINUTES",
+    "seconds": "SECONDS",
+    "milliseconds": "MILLISECONDS"
+  }
+}

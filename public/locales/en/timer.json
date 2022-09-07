@@ -1,0 +1,36 @@
+{
+  "actions": {
+    "addStep": "Add step",
+    "deleteStep": "Delete step",
+    "start": "Start",
+    "pause": "Pause",
+    "reset": "Reset",
+    "nextStep": "Next step",
+    "previousStep": "Previous step",
+    "clear": "Clear",
+    "clearConfirmation": "Do you want to clear timer?"
+  },
+  "navigation": {
+    "set": "Set",
+    "start": "Start",
+    "continue": "Continue",
+    "editSteps": "Edit steps"
+  },
+  "step": {
+    "deleteConfirmation": "Do you want to delete this step?",
+    "title_placeholder": "Title",
+    "description_placeholder": "Description"
+  },
+  "saveModal": {
+    "header": "Save Timer",
+    "cancel": "Cancel",
+    "save": "Save",
+    "overwriteConfirmation": "Do you want to overwrite save: ",
+    "titlePlaceholder": "Title"
+  },
+  "loadModal": {
+    "header": "Load Timer",
+    "cancel": "Cancel",
+    "load": "Load"
+  }
+}
