@@ -10,12 +10,13 @@ interface Props {
   grayed?: boolean;
 
   setTime: (time: number) => void;
+  stepId: string
 }
 
 const MAX_VALUES = [99, 59, 59];
 const TIME_MULTIPLIERS = [60 * 60 * 1000, 60 * 1000, 1000];
 
-const TimeEditor = ({ time, grayed, setTime }: Props) => {
+const TimeEditor = ({ stepId, time, grayed, setTime }: Props) => {
   const { t } = useTranslation('common', { keyPrefix: 'time' });
 
   const [val, setVal] = useState(() => {
@@ -140,12 +141,12 @@ const TimeEditor = ({ time, grayed, setTime }: Props) => {
         grayed ? 'text-secondary' : 'text-primary'
       )}
     >
-      <EditorInput index={0} value={val[0]} onChange={onInputChange} />
-      <EditorInput index={1} value={val[1]} onChange={onInputChange} />
-      <EditorInput index={2} value={val[2]} onChange={onInputChange} />
-      <span className="font-medium text-sm text-secondary">{t('hours')}</span>
-      <span className="font-medium text-sm text-secondary">{t('minutes')}</span>
-      <span className="font-medium text-sm text-secondary">{t('seconds')}</span>
+      <EditorInput id={`step-${stepId}-hours-input`} index={0} value={val[0]} onChange={onInputChange} />
+      <EditorInput id={`step-${stepId}-minutes-input`}index={1} value={val[1]} onChange={onInputChange} />
+      <EditorInput id={`step-${stepId}-seconds-input`}index={2} value={val[2]} onChange={onInputChange} />
+      <label htmlFor={`step-${stepId}-hours-input`} className="font-medium text-sm text-secondary">{t('hours')}</label>
+      <label htmlFor={`step-${stepId}-minutes-input`} className="font-medium text-sm text-secondary">{t('minutes')}</label>
+      <label htmlFor={`step-${stepId}-seconds-input`}className="font-medium text-sm text-secondary">{t('seconds')}</label>
     </div>
   );
 };
@@ -153,14 +154,16 @@ const TimeEditor = ({ time, grayed, setTime }: Props) => {
 export { TimeEditor };
 
 interface InputProps {
+  id: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   value?: string | null;
   index: number;
 }
 
-const EditorInput = ({ value, onChange, index }: InputProps) => {
+const EditorInput = ({id, value, onChange, index }: InputProps) => {
   return (
     <input
+      id={id}
       data-index={index}
       onChange={onChange}
       inputMode='numeric'
