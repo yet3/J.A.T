@@ -21,7 +21,7 @@ const StepDeleteButton = ({ onDelete, disabled, t }: Props) => {
 
   return (
     <>
-      <button className="translate-x-0 translate-y-0 bg-primary w-5 h-5 ml-auto" onClick={() => deleteModal.open()}>
+      <button className="translate-x-0 translate-y-0 bg-primary w-5 h-5 ml-auto" onClick={() => deleteModal.open()} aria-label='Delete step'>
         <div
           className={clsx('absolute w-full h-[2px] rotate-45', disabled ? 'bg-text-secondary' : 'bg-text-primary')}
         />

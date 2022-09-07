@@ -21,7 +21,7 @@ const StepHeader = ({ stepIndex, amtOfSteps, isDragging, attributes, listeners, 
     <header className="grid grid-cols-[1fr,1.25rem] items-center gap-2 w-full h-6 text-inherit mb-1">
       {amtOfSteps > 1 ? (
         <div {...attributes} {...listeners} className="flex cursor-grab text-inherit mr-auto">
-          <button className="mr-2 cursor-grab">
+          <button className="mr-2 cursor-grab" aria-label='Move step'>
             <MoveSvg width={24} height={24} grayed={isDragging} />
           </button>
           <p className="text-inherit">
