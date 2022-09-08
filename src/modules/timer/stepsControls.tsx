@@ -17,7 +17,7 @@ interface Props {
   t: TFunction;
 }
 
-const StepsSummary = ({ status, totalTime, setMode, clear, t, start }: Props) => {
+const StepsControls = ({ status, totalTime, setMode, clear, t, start }: Props) => {
   const router = useRouter();
   const saveModal = useModal(SaveModal, { closeOnBackdropClick: false });
   const loadModal = useModal(LoadModal, { closeOnBackdropClick: false });
@@ -53,8 +53,8 @@ const StepsSummary = ({ status, totalTime, setMode, clear, t, start }: Props) =>
         <TimeDisplay time={totalTime} size="sm" />
       </div>
       <div className="col-span-full grid grid-cols-2 gap-2">
-        <ControlBtn text={t('Save')} onClick={() => saveModal.open()} />
-        <ControlBtn text={'Load'} onClick={() => loadModal.open()} />
+        <ControlBtn text={t('actions.save')} onClick={() => saveModal.open()} />
+        <ControlBtn text={t('actions.load')} onClick={() => loadModal.open()} />
       </div>
 
       {clearModal.component}
@@ -64,4 +64,4 @@ const StepsSummary = ({ status, totalTime, setMode, clear, t, start }: Props) =>
   );
 };
 
-export { StepsSummary };
+export { StepsControls };

@@ -1,5 +1,5 @@
 import { useSortable } from '@dnd-kit/sortable';
-import { useTimerStep } from './../useTimerStep.hook';
+import { useTimerStep } from '../useTimerStep.hook';
 import { TimerStep } from '@typings/timer';
 import { CSS } from '@dnd-kit/utilities';
 import { TFunction, useTranslation } from 'next-i18next';
@@ -13,7 +13,7 @@ interface Props {
   index: number;
 }
 
-const StepView = ({ index, step }: Props) => {
+const Step = ({ index, step }: Props) => {
   const { t } = useTranslation('timer', { keyPrefix: 'step' });
   const {
     amtOfSteps,
@@ -57,7 +57,7 @@ const StepView = ({ index, step }: Props) => {
   );
 };
 
-export { StepView };
+export { Step };
 
 interface TaProps {
   t: TFunction;

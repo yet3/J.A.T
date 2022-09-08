@@ -3,8 +3,8 @@ import { DndContext, DragEndEvent, DragStartEvent, PointerSensor, useSensor, use
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { MainLayout } from '@layouts/main.layout';
 import { StepDragOverlay } from '@modules/timer/step/stepDragOverlay';
-import { StepsSummary } from '@modules/timer/stepsSummary';
-import { StepView } from '@modules/timer/step/stepView';
+import { StepsControls } from '@modules/timer/stepsControls';
+import { Step } from '@modules/timer/step/step';
 import { useTimer } from '@modules/timer/useTimer.hook';
 import { TimerStep } from '@typings/timer';
 import { NextPage } from 'next';
@@ -44,13 +44,13 @@ const TimerEditor: NextPage = () => {
       <Seo titleKey="timerEditor" />
       {hasInitialized && (
         <>
-          <StepsSummary totalTime={totalTime} clear={clear} t={t} start={start} setMode={setMode} status={status} />
+          <StepsControls totalTime={totalTime} clear={clear} t={t} start={start} setMode={setMode} status={status} />
 
           <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <SortableContext items={steps.map((t) => t.id)} strategy={verticalListSortingStrategy}>
               <ol className="grid content-start items-start justify-items-center mt-4 w-full px-4">
                 {steps.map((step, i) => (
-                  <StepView step={step} index={i} key={step.id} />
+                  <Step step={step} index={i} key={step.id} />
                 ))}
 
                 <li className="pb-12 flex justify-center pt-4">
