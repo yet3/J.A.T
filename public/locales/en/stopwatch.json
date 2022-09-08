@@ -1,7 +1,7 @@
 {
   "actions": {
     "start": "Start",
-    "pause": "Puase",
+    "pause": "Pause",
     "reset": "Reset",
     "lap": "Lap"
   },

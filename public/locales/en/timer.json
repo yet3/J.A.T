@@ -8,7 +8,10 @@
     "nextStep": "Next step",
     "previousStep": "Previous step",
     "clear": "Clear",
-    "clearConfirmation": "Do you want to clear timer?"
+    "clearConfirmation": "Do you want to clear timer?",
+
+    "save": "Save",
+    "load": "Load"
   },
   "navigation": {
     "set": "Set",
