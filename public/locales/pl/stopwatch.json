@@ -1,0 +1,9 @@
+{
+  "actions": {
+    "start": "Start",
+    "pause": "Pauza",
+    "reset": "Reset",
+    "lap": "Okrążenie"
+  },
+  "laps": "Okrążenie"
+}

@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "addStep": "Dodaj krok",
+    "deleteStep": "Usuń krok",
+    "start": "Start",
+    "pause": "Pauza",
+    "reset": "Reset",
+    "nextStep": "Następny krok",
+    "previousStep": "Poprzedni krok",
+    "clear": "Wyczyść",
+    "clearConfirmation": "Czy na pewno chcesz wyczyścić timer?",
+
+    "save": "Zapisz",
+    "load": "Wczytaj"
+  },
+  "navigation": {
+    "set": "Ustaw",
+    "start": "Start",
+    "continue": "Kontynuuj",
+    "editSteps": "Edytuj timer"
+  },
+  "step": {
+    "deleteConfirmation": "Czy na pewno chcesz usunąć ten krok?",
+    "title_placeholder": "Tytuł",
+    "description_placeholder": "Opis"
+  },
+  "saveModal": {
+    "header": "Zapisz Timer",
+    "cancel": "Anuluj",
+    "save": "Zapisz",
+    "overwriteConfirmation": "Czy na pewno chcesz nadpisać ten zapis: ",
+    "titlePlaceholder": "Tytuł"
+  },
+  "loadModal": {
+    "header": "Wczytaj Timer",
+    "cancel": "Anuluj",
+    "load": "Wczytaj"
+  }
+}
