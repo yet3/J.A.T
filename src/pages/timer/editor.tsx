@@ -6,11 +6,14 @@ import { StepDragOverlay } from '@modules/timer/step/stepDragOverlay';
 import { StepsControls } from '@modules/timer/stepsControls';
 import { Step } from '@modules/timer/step/step';
 import { useTimer } from '@modules/timer/useTimer.hook';
-import { TimerStep } from '@typings/timer';
+import { TimerSavedStep, TimerStep } from '@typings/timer';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { makeStepsSavable } from '@modules/timer/makeStepsSavable.util';
+import { useRouter } from 'next/router';
+import { autoId } from '@utils/autoId.util';
 
 const TimerEditor: NextPage = () => {
   const {
@@ -18,11 +21,32 @@ const TimerEditor: NextPage = () => {
     totalTime,
     status,
     hasInitialized,
-    actions: { addStep, moveStep, clear, start, setMode },
+    actions: { addStep, moveStep, clear, start, setTimer, setMode },
   } = useTimer();
   const [selectedStep, setSelectedStep] = useState<TimerStep | null>(null);
   const sensors = useSensors(useSensor(PointerSensor));
+  const router = useRouter();
   const { t } = useTranslation('timer');
+
+  useEffect(() => {
+    const query = router.query
+    const urlSteps = query.steps;
+    if (typeof urlSteps === 'string') {
+      let savedSteps = JSON.parse(query.steps as string) as TimerSavedStep[]
+      const steps: TimerStep[] = [];
+      if (Array.isArray(savedSteps)) savedSteps.forEach(savedStep => {
+        steps.push({
+          id: autoId(),
+          title: savedStep.title ?? '',
+          description: savedStep.description ?? '',
+          time: savedStep.time ?? 5000,
+        })
+      })
+
+      setTimer({ steps })
+      router.replace(router.pathname, undefined, { shallow: true });
+    }
+  }, [router.query])
 
   const handleDragStart = (e: DragStartEvent) => {
     const { active } = e;
@@ -39,12 +63,13 @@ const TimerEditor: NextPage = () => {
     setSelectedStep(null);
   };
 
+
   return (
     <MainLayout>
       <Seo titleKey="timerEditor" />
       {hasInitialized && (
         <>
-          <StepsControls totalTime={totalTime} clear={clear} t={t} start={start} setMode={setMode} status={status} />
+          <StepsControls steps={steps} totalTime={totalTime} clear={clear} t={t} start={start} setMode={setMode} status={status} />
 
           <DndContext sensors={sensors} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
             <SortableContext items={steps.map((t) => t.id)} strategy={verticalListSortingStrategy}>

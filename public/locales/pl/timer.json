@@ -11,7 +11,10 @@
     "clearConfirmation": "Czy na pewno chcesz wyczyścić timer?",
 
     "save": "Zapisz",
-    "load": "Wczytaj"
+    "load": "Wczytaj",
+
+    "share": "Udostepnij",
+    "copied": "Skopiowano!"
   },
   "navigation": {
     "set": "Ustaw",

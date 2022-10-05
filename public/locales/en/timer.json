@@ -11,7 +11,10 @@
     "clearConfirmation": "Do you want to clear timer?",
 
     "save": "Save",
-    "load": "Load"
+    "load": "Load",
+
+    "share": "Share",
+    "copied": "Copied!"
   },
   "navigation": {
     "set": "Set",

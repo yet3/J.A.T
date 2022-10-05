@@ -9,13 +9,15 @@ import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router';
-import React, { cloneElement } from 'react';
+import React from 'react';
+import { TimerShareBtn } from '@modules/timer/shareBtn';
 
 const TimerPage: NextPage = () => {
   const { t } = useTranslation('timer');
   const router = useRouter();
   const {
     status,
+    steps,
     time,
     currentStep,
     currentStepIndex,
@@ -36,7 +38,7 @@ const TimerPage: NextPage = () => {
       <Seo titleKey="timer" />
       {hasInitialized && (
         <>
-          <section className="grid grid-flow-col gap-4 mb-8">
+          <section className="grid  grid-cols-3 sm:grid-cols-4 gap-4 mb-8">
             <ControlBtn
               stage={status === 'running' ? 'pause' : 'start'}
               stages={{
@@ -46,6 +48,7 @@ const TimerPage: NextPage = () => {
             />
             <ControlBtn text={t('actions.reset')} onClick={() => reset()} />
             <ControlBtn text={t('navigation.editSteps')} onClick={handleEditSteps} />
+            <TimerShareBtn steps={steps} t={t} className='col-start-2 sm:col-start-auto' />
           </section>
           <TimeDisplay time={time} size="lg" />
           <section className="mt-8 grid grid-cols-[9rem,auto,9rem] items-center gap-4">

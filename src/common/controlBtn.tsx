@@ -5,14 +5,12 @@ type TTT = Record<
   string,
   {
     text?: string;
-    icon?: string;
     onClick?: () => void;
   }
 >;
 
 interface Props<S extends TTT> extends DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   text?: string;
-  icon?: string;
 
   stages?: S;
   stage?: keyof S;
@@ -24,7 +22,6 @@ const ControlBtn = <S extends TTT>({
   size = 'base',
   stage,
   stages,
-  icon,
   className,
   ...props
 }: Props<S>) => {
@@ -33,8 +30,8 @@ const ControlBtn = <S extends TTT>({
   if (stages && stage) {
     const s = stages[stage];
     if (s) {
-      text = s.text;
-      onClick = s.onClick;
+      if (s.text) text = s.text;
+      if (s.onClick) onClick = s.onClick;
     }
   }
 

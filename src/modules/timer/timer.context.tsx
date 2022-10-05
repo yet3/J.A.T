@@ -4,6 +4,7 @@ import { autoId } from '@utils/autoId.util';
 import { getTime } from '@utils/getTime.util';
 import { createContext, ReactNode, Reducer, useEffect, useReducer } from 'react';
 import { getTimerDetails } from './getTimerDetails.util';
+import { makeStepsSavable } from './makeStepsSavable.util';
 
 let autoSaveTimeout: null | NodeJS.Timeout = null;
 
@@ -24,7 +25,7 @@ const saveState = (d: (() => TimerState) | TimerState): TimerState => {
         mode: state.mode,
         startedAt: state.startedAt,
         pausedAt: state.pausedAt,
-        steps: state.steps.map((step) => ({ time: step.time, title: step.title, description: step.description })),
+        steps: makeStepsSavable(state.steps),
       } as TimerAutoSave)
     );
 
@@ -78,7 +79,7 @@ const reducer: Reducer<TimerState, TimerActions> = (state, action) => {
           mode,
           startedAt,
           pausedAt,
-          steps: steps.map((step) => ({ ...step, id: autoId() })),
+          steps: steps.map((savedStep) => ({ ...savedStep, id: autoId() })),
         };
       }
 
@@ -88,7 +89,7 @@ const reducer: Reducer<TimerState, TimerActions> = (state, action) => {
       };
     }
     case 'setTimer': {
-      return { ...state, ...payload };
+      return saveState({ ...state, ...payload });
     }
     case 'setMode': {
       return saveState({ ...state, mode: payload.mode });

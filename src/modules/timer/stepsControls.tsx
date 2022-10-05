@@ -3,10 +3,13 @@ import { ConfirmationModal } from '@common/modals/confirmation.modal';
 import { LoadModal } from '@modules/load.modal';
 import { SaveModal } from '@modules/save.modal';
 import { TimeDisplay } from '@modules/timeDisplay/timeDisplay';
-import { TimerMode, TimerStatus } from '@typings/timer';
+import { TimerMode, TimerStatus, TimerStep } from '@typings/timer';
 import { useModal } from '@yet3/use-modal';
 import { TFunction } from 'next-i18next';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { makeStepsSavable } from './makeStepsSavable.util';
+import { TimerShareBtn } from './shareBtn';
 
 interface Props {
   status: TimerStatus;
@@ -15,12 +18,15 @@ interface Props {
   clear: () => void;
   start: (forced?: boolean) => void;
   t: TFunction;
+  steps: TimerStep[]
 }
 
-const StepsControls = ({ status, totalTime, setMode, clear, t, start }: Props) => {
+const StepsControls = ({ steps, status, totalTime, setMode, clear, t, start }: Props) => {
   const router = useRouter();
   const saveModal = useModal(SaveModal, { closeOnBackdropClick: false });
   const loadModal = useModal(LoadModal, { closeOnBackdropClick: false });
+
+
   const clearModal = useModal(ConfirmationModal, {
     props: {
       content: t('actions.clearConfirmation') as string,
@@ -31,8 +37,9 @@ const StepsControls = ({ status, totalTime, setMode, clear, t, start }: Props) =
     },
   });
 
+
   return (
-    <div className="grid grid-cols-3 gap-2 max-w-sm">
+    <div className="grid grid-cols-[repeat(3,minmax(6rem,1fr))] gap-2 max-w-sm">
       <ControlBtn
         text={t('navigation.set')}
         onClick={() => {
@@ -52,10 +59,9 @@ const StepsControls = ({ status, totalTime, setMode, clear, t, start }: Props) =
       <div className={'grid gap-1 border border-primary p-1 col-span-full'}>
         <TimeDisplay time={totalTime} size="sm" />
       </div>
-      <div className="col-span-full grid grid-cols-2 gap-2">
-        <ControlBtn text={t('actions.save')} onClick={() => saveModal.open()} />
-        <ControlBtn text={t('actions.load')} onClick={() => loadModal.open()} />
-      </div>
+      <ControlBtn text={t('actions.save')} onClick={() => saveModal.open()} />
+      <ControlBtn text={t('actions.load')} onClick={() => loadModal.open()} />
+      <TimerShareBtn steps={steps} t={t} />
 
       {clearModal.component}
       {saveModal.component}
