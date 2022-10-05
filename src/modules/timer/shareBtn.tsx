@@ -22,7 +22,7 @@ const TimerShareBtn = ({ steps, t, className }: Props) => {
       setShareTimeout(null);
     }
 
-    const url = new URL(window.location.href.split('?')[0])
+    const url = new URL(window.location.origin)
     url.search = new URLSearchParams({ steps: JSON.stringify(makeStepsSavable(steps)) }).toString()
     navigator.clipboard.writeText(url.toString())
 

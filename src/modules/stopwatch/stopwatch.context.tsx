@@ -16,7 +16,6 @@ const saveState = (d: (() => StopwatchState) | StopwatchState): StopwatchState =
   }
 
   autoSaveTimeout = setTimeout(() => {
-    console.log('timer auto saved');
     window.localStorage.setItem(
       'stopwatchAutoSave',
       JSON.stringify({

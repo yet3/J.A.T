@@ -18,7 +18,6 @@ const saveState = (d: (() => TimerState) | TimerState): TimerState => {
   }
 
   autoSaveTimeout = setTimeout(() => {
-    console.log('timer auto saved');
     window.localStorage.setItem(
       'timerAutoSave',
       JSON.stringify({
