@@ -7,7 +7,9 @@ import { useTimer } from '@modules/timer/useTimer.hook';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import ReactMarkdown from 'react-markdown'
 import { useRouter } from 'next/router';
+import React, { cloneElement } from 'react';
 
 const TimerPage: NextPage = () => {
   const { t } = useTranslation('timer');
@@ -64,11 +66,17 @@ const TimerPage: NextPage = () => {
             />
           </section>
           {currentStep && (
-            <section className="max-w-[360px] mt-4 text-center">
-              <h2 className="font-medium text-xl mb-2">{currentStep.title}</h2>
-              <p>
-                <pre>{currentStep.description}</pre>
-              </p>
+            <section className="max-w-[360px] mt-4 w-full">
+              <h2 className="font-medium text-2xl mb-2 text-center">{currentStep.title}</h2>
+              <div>
+                <ReactMarkdown children={currentStep.description} components={{
+                  h1: ({ ...props }) => <h2 className='text-xl' {...props} />,
+                  h2: ({ ...props }) => <h2 className='text-xl' {...props} />,
+                  h3: ({ ...props }) => <h3 className='text-lg' {...props} />,
+                  ul: ({...props}) => <ul className='list-disc ml-5' {...props} />,
+                  ol: ({...props}) => <ol className='list-decimal ml-5' {...props} />
+                }} />
+              </div>
             </section>
           )}
         </>
