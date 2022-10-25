@@ -79,8 +79,20 @@ const SaveModal = ({ closeModal }: Props) => {
     closeModal();
   };
 
+  const handleDeleteSave = (saveId: string) => {
+    if (typeof window === 'undefined') return;
+
+    const tmp = saves.slice();
+    const index = tmp.findIndex((s) => s.id === saveId);
+    if (index < 0) return;
+    tmp.splice(index, 1);
+
+    window.localStorage.setItem('timerSaves', JSON.stringify(tmp));
+    setSaves(tmp);
+  };
+
   const handleTimerSelect = (timer: SavedTimer) => {
-    if (!shoulUnselect) setShouldUnselect(true)
+    if (!shoulUnselect) setShouldUnselect(true);
 
     if (selectedSaveId !== timer.id) {
       setTitle(timer.title);
@@ -107,14 +119,13 @@ const SaveModal = ({ closeModal }: Props) => {
             setTitle(e.target.value);
           }}
         />
-        {saves.length > 0 && (
-          <SavedTimersList
-            timers={saves}
-            onTimerClick={handleTimerSelect}
-            onTimerDoubleClick={handleSave}
-            selectedTimerId={selectedSaveId}
-          />
-        )}
+        <SavedTimersList
+          timers={saves}
+          onDelete={handleDeleteSave}
+          onTimerClick={handleTimerSelect}
+          onTimerDoubleClick={handleSave}
+          selectedTimerId={selectedSaveId}
+        />
       </main>
       <footer className="grid grid-flow-col gap-4">
         <ControlBtn text={t('cancel')} onClick={closeModal} />

@@ -31,6 +31,7 @@
     "header": "Save Timer",
     "cancel": "Cancel",
     "save": "Save",
+    "noSaves": "No saves",
     "overwriteConfirmation": "Do you want to overwrite save: ",
     "titlePlaceholder": "Title"
   },

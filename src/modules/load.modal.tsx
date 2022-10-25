@@ -41,6 +41,18 @@ const LoadModal = ({ closeModal }: Props) => {
     closeModal();
   };
 
+  const handleDeleteSave = (saveId: string) => {
+    if (typeof window === 'undefined') return;
+
+    const tmp = timers.slice();
+    const index = tmp.findIndex((s) => s.id === saveId);
+    if (index < 0) return;
+    tmp.splice(index, 1);
+
+    window.localStorage.setItem('timerSaves', JSON.stringify(tmp));
+    setTimers(tmp);
+  };
+
   const handleTimerSelect = (timer: SavedTimer) => {
     if (selectedSaveId !== timer.id) {
       setSelectedSaveId(timer.id);
@@ -53,14 +65,13 @@ const LoadModal = ({ closeModal }: Props) => {
     <div className="w-80 grid gap-3">
       <header className="text-center text-lg">{t('header')}</header>
       <main className="grid gap-4">
-        {timers.length > 0 && (
-          <SavedTimersList
-            timers={timers}
-            onTimerClick={handleTimerSelect}
-            onTimerDoubleClick={handleLoad}
-            selectedTimerId={selectedSaveId}
-          />
-        )}
+        <SavedTimersList
+          timers={timers}
+          onTimerClick={handleTimerSelect}
+          onTimerDoubleClick={handleLoad}
+          selectedTimerId={selectedSaveId}
+          onDelete={handleDeleteSave}
+        />
       </main>
       <footer className="grid grid-flow-col gap-4">
         <ControlBtn text={t('cancel')} onClick={closeModal} />
