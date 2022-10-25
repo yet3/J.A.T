@@ -26,16 +26,19 @@ const Btn = ({ type, t }: BtnProps) => {
 
   let href = '/';
   let content = '';
+  let isSelected = false;
   if (type === 'timers') {
     if (timer.mode === 'timer') href = '/timer';
     else href = '/timer/editor';
+
     content = t('timer');
+    isSelected = pathname.includes('timer')
   } else if (type === 'stopwatch') {
     href = '/stopwatch';
     content = t('stopwatch');
+    isSelected = pathname === href;
   }
 
-  const isSelected = pathname === href;
   return (
     <Link href={href}>
       <span className={clsx('cursor-pointer', isSelected ? 'text-primary' : 'text-secondary')}>{content}</span>
