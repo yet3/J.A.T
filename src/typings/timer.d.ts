@@ -16,8 +16,8 @@ export interface TimerState {
   pausedAt: number;
   steps: TimerStep[];
 
-  hasInitialized: boolean
-  saveId: string | null
+  hasInitialized: boolean;
+  saveId: string | null;
 }
 
 export type TimerSavedStep = Omit<TimerStep, 'id'>;
@@ -33,8 +33,8 @@ export interface TimerAutoSave {
 export interface SavedTimer {
   id: string;
   title: string;
-  steps: TimerSavedStep[]
-  savedAt: Date
+  steps: TimerSavedStep[];
+  savedAt: Date;
 }
 
 export type TimerActions =

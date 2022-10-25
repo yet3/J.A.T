@@ -2,15 +2,27 @@ import { ITimerContext, TimerActions, TimerAutoSave, TimerState, TimerStep } fro
 import { arrayMove } from '@dnd-kit/sortable';
 import { autoId } from '@utils/autoId.util';
 import { getTime } from '@utils/getTime.util';
-import { createContext, ReactNode, Reducer, useEffect, useReducer } from 'react';
+import { createContext, ReactNode, Reducer, useEffect, useReducer, useRef } from 'react';
 import { getTimerDetails } from './getTimerDetails.util';
 import { makeStepsSavable } from './makeStepsSavable.util';
 
 let autoSaveTimeout: null | NodeJS.Timeout = null;
 
+let worker: null | Worker = null;
+
+const withWorker = (state: TimerState) => {
+  if (worker) {
+    worker.postMessage(state);
+  }
+
+  return state;
+};
+
 const saveState = (d: (() => TimerState) | TimerState): TimerState => {
   const state = typeof d === 'function' ? d() : d;
   if (typeof window === 'undefined') return state;
+
+  withWorker(state);
 
   if (autoSaveTimeout != null) {
     clearTimeout(autoSaveTimeout);
@@ -72,13 +84,15 @@ const reducer: Reducer<TimerState, TimerActions> = (state, action) => {
       const savedStateJSON = window.localStorage.getItem('timerAutoSave');
       if (savedStateJSON) {
         const { mode, startedAt, pausedAt, steps } = JSON.parse(savedStateJSON) as TimerAutoSave;
+        const pSteps = steps.map((savedStep) => ({ ...savedStep, id: autoId() }));
+
         return {
           ...initialState,
           hasInitialized: true,
           mode,
           startedAt,
           pausedAt,
-          steps: steps.map((savedStep) => ({ ...savedStep, id: autoId() })),
+          steps: pSteps,
         };
       }
 
@@ -155,7 +169,7 @@ const reducer: Reducer<TimerState, TimerActions> = (state, action) => {
         return total + step.time;
       }, 0);
 
-      return { ...state, pausedAt: 0, startedAt: getTime() - n };
+      return withWorker({ ...state, pausedAt: 0, startedAt: getTime() - n });
     }
     case 'previousStep': {
       const currentStepIndex = state.steps.findIndex((s) => s.id === payload.currentStepId);
@@ -167,7 +181,7 @@ const reducer: Reducer<TimerState, TimerActions> = (state, action) => {
         return total + step.time;
       }, 0);
 
-      return { ...state, pausedAt: 0, startedAt: getTime() - n };
+      return withWorker({ ...state, pausedAt: 0, startedAt: getTime() - n });
     }
     case 'setStepTime': {
       return saveState({ ...state, steps: setStepProperties(state, payload.id, { time: payload.time }) });
@@ -193,11 +207,41 @@ const Provider = TimerContext.Provider;
 export const TimerProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  const timerAudio = useRef(typeof window !== 'undefined' && new Audio('/sounds/timer_end.mp3')).current;
+  const stepAudio = useRef(typeof window !== 'undefined' && new Audio('/sounds/timer_step_end.mp3')).current;
+
   useEffect(() => {
-    if (!state.hasInitialized) {
-      dispatch({ type: 'init' });
-    }
+    dispatch({ type: 'init' });
+    if (typeof window === 'undefined') return;
+    worker = new Worker(new URL('../../workers/timer.worker.ts', import.meta.url));
+
+    worker.onmessage = (e: MessageEvent<'finished_step' | 'finished_timer'>) => {
+      if (e.data === 'finished_timer') {
+        if (timerAudio) timerAudio.play();
+      } else if (e.data === 'finished_step') {
+        if (stepAudio) stepAudio.play();
+      }
+    };
+
+    return () => {
+      if (worker) worker.terminate();
+      if (timerAudio) timerAudio.pause();
+      if (stepAudio) stepAudio.pause();
+    };
   }, []);
+
+  useEffect(() => {
+    if (timerAudio) {
+      timerAudio.pause();
+      timerAudio.currentTime = 0;
+    }
+
+
+    if (stepAudio) {
+      stepAudio.pause();
+      stepAudio.currentTime = 0;
+    }
+  }, [state.pausedAt, state.startedAt, state.mode]);
 
   return <Provider value={{ state, dispatch }}>{children}</Provider>;
 };

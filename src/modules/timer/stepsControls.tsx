@@ -7,8 +7,6 @@ import { TimerMode, TimerStatus, TimerStep } from '@typings/timer';
 import { useModal } from '@yet3/use-modal';
 import { TFunction } from 'next-i18next';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { makeStepsSavable } from './makeStepsSavable.util';
 import { TimerShareBtn } from './shareBtn';
 
 interface Props {

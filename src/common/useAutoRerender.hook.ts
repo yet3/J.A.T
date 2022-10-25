@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface Options {
   every: number;
   isRunning?: boolean | null;
   onlyIfVisible?: boolean;
+
+  worker?: {
+  
+  }
 }
 
 const useAutoRerender = ({ every, onlyIfVisible = true, ...opts }: Options) => {
@@ -28,7 +32,9 @@ const useAutoRerender = ({ every, onlyIfVisible = true, ...opts }: Options) => {
         }
       };
 
-      if (onlyIfVisible) document.addEventListener('visibilitychange', handleVisibilityChange);
+      if (onlyIfVisible) {
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+      }
 
       return () => {
         clearInterval(interval);

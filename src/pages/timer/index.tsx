@@ -7,9 +7,9 @@ import { useTimer } from '@modules/timer/useTimer.hook';
 import { NextPage } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import ReactMarkdown from 'react-markdown'
+import ReactMarkdown from 'react-markdown';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TimerShareBtn } from '@modules/timer/shareBtn';
 
 const TimerPage: NextPage = () => {
@@ -48,7 +48,7 @@ const TimerPage: NextPage = () => {
             />
             <ControlBtn text={t('actions.reset')} onClick={() => reset()} />
             <ControlBtn text={t('navigation.editSteps')} onClick={handleEditSteps} />
-            <TimerShareBtn steps={steps} t={t} className='col-start-2 sm:col-start-auto' />
+            <TimerShareBtn steps={steps} t={t} className="col-start-2 sm:col-start-auto" />
           </section>
           <TimeDisplay time={time} size="lg" />
           <section className="mt-8 grid grid-cols-[9rem,auto,9rem] items-center gap-4">
@@ -72,13 +72,16 @@ const TimerPage: NextPage = () => {
             <section className="max-w-[360px] mt-4 w-full">
               <h2 className="font-medium text-2xl mb-2 text-center">{currentStep.title}</h2>
               <div>
-                <ReactMarkdown children={currentStep.description} components={{
-                  h1: ({ ...props }) => <h2 className='text-xl' {...props} />,
-                  h2: ({ ...props }) => <h2 className='text-xl' {...props} />,
-                  h3: ({ ...props }) => <h3 className='text-lg' {...props} />,
-                  ul: ({...props}) => <ul className='list-disc ml-5' {...props} />,
-                  ol: ({...props}) => <ol className='list-decimal ml-5' {...props} />
-                }} />
+                <ReactMarkdown
+                  children={currentStep.description}
+                  components={{
+                    h1: ({ ...props }) => <h2 className="text-xl" {...props} />,
+                    h2: ({ ...props }) => <h2 className="text-xl" {...props} />,
+                    h3: ({ ...props }) => <h3 className="text-lg" {...props} />,
+                    ul: ({ ...props }) => <ul className="list-disc ml-5" {...props} />,
+                    ol: ({ ...props }) => <ol className="list-decimal ml-5" {...props} />,
+                  }}
+                />
               </div>
             </section>
           )}

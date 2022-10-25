@@ -10,16 +10,16 @@ UseModal.setOptions({
   modalWrapper: (
     <aside className="bg-primary border-primary border p-3 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[20rem] sm:w-auto sm:min-w-[15rem]" />
   ),
-  backdropColor: 'rgba(0, 0, 0, 0.8)'
+  backdropColor: 'rgba(0, 0, 0, 0.8)',
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-      <TimerProvider>
-        <StopwatchProvider>
-          <Component {...pageProps} />
-        </StopwatchProvider>
-      </TimerProvider>
+    <TimerProvider>
+      <StopwatchProvider>
+        <Component {...pageProps} />
+      </StopwatchProvider>
+    </TimerProvider>
   );
 }
 

@@ -56,6 +56,8 @@ const useTimer = () => {
     mode: state.mode,
     status,
     totalTime,
+    startedAt: state.startedAt,
+    pausedAt: state.pausedAt,
     ranTime,
     time,
     saveId: state.saveId,
