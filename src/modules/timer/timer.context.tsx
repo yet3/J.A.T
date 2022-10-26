@@ -169,7 +169,8 @@ const reducer: Reducer<TimerState, TimerActions> = (state, action) => {
         return total + step.time;
       }, 0);
 
-      return withWorker({ ...state, pausedAt: 0, startedAt: getTime() - n });
+      const now = getTime();
+      return withWorker({ ...state, pausedAt: (state.startedAt === 0 || state.pausedAt > 0) ? now : 0, startedAt: now - n });
     }
     case 'previousStep': {
       const currentStepIndex = state.steps.findIndex((s) => s.id === payload.currentStepId);
@@ -181,7 +182,8 @@ const reducer: Reducer<TimerState, TimerActions> = (state, action) => {
         return total + step.time;
       }, 0);
 
-      return withWorker({ ...state, pausedAt: 0, startedAt: getTime() - n });
+      const now = getTime();
+      return withWorker({ ...state, pausedAt: (state.startedAt === 0 || state.pausedAt > 0) ? now : 0, startedAt: now - n });
     }
     case 'setStepTime': {
       return saveState({ ...state, steps: setStepProperties(state, payload.id, { time: payload.time }) });
@@ -235,7 +237,6 @@ export const TimerProvider = ({ children }: { children: ReactNode }) => {
       timerAudio.pause();
       timerAudio.currentTime = 0;
     }
-
 
     if (stepAudio) {
       stepAudio.pause();
