@@ -9,7 +9,7 @@ const Seo = ({ titleKey }: Props) => {
   const { t } = useTranslation('common', { keyPrefix: 'pages' });
 
   const title = titleKey ? t(`${titleKey}`) + ' | J.A.T' : 'J.A.T';
-  const description = 'Yet another timer app'
+  const description = 'Just another timer'
   const url = typeof window !== 'undefined' ? window.location.origin : ''
   const ogImage = url +  '/cover.png';
   return (
