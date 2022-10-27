@@ -1,5 +1,5 @@
 {
-  "name": "yata",
+  "name": "jat",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -35,6 +35,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yet3/yata.git"
+    "url": "https://github.com/yet3/J.A.T.git"
   }
 }
