@@ -8,10 +8,10 @@ interface Props {
 const Seo = ({ titleKey }: Props) => {
   const { t } = useTranslation('common', { keyPrefix: 'pages' });
 
-  const title = titleKey ? t(`${titleKey}`) + ' | Yata' : 'Yata';
+  const title = titleKey ? t(`${titleKey}`) + ' | J.A.T' : 'J.A.T';
   const description = 'Yet another timer app'
   const url = typeof window !== 'undefined' ? window.location.origin : ''
-  const ogImage = url +  '/app_image.png';
+  const ogImage = url +  '/cover.png';
   return (
     <Head>
       <title>{title}</title>
